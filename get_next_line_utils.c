@@ -70,3 +70,44 @@ int     number_of_chars(int fd)
     }
     return (bytes);
 }
+
+char    *ft_strdup(const char *s)
+{
+    size_t	size;
+	size_t	n;
+	char	*s_dub;
+
+	n = 0;
+	size = ft_strlen((char *)s);
+	s_dub = (char *)malloc(size + 1);
+	if (!s_dub)
+	{
+		return (NULL);
+	}
+	while (n < size)
+	{
+		s_dub[n] = s[n];
+		n++;
+	}
+	s_dub[n] = '\0';
+	return (s_dub);
+}
+
+char    *ft_strjoin(const char *s1, const char *s2)
+{
+    int     len;
+    char    *new_str;
+
+    if (!s1 || !s2)
+    {
+        return (NULL);
+    }
+    len = (ft_strlen(s1) + ft_strlen(s2) + 1);
+    new_str = malloc(len);
+    if (!new_str)
+        return (NULL);
+    new_str[0] = '\0';
+    ft_strcat(new_str, s1);
+    ft_strcat(new_str, s2);
+    return (new_str);
+}
