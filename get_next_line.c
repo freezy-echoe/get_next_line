@@ -19,29 +19,38 @@ char	*get_next_line(int fd)
     char        *buffer_compile;
     char        *temp;
     int         newline_status;
-    int         buff_count;
-    int         fd2;
 
     leftover = NULL;
     bytes = 0;
-    fd2 = fd;
-    buff_count = 1;
-    newline_status = 1;
+    newline_status = 0;
     buffer = malloc(BUFFER_SIZE + 1); //buffer is set to dynamic memory allocation with +1 for null character
-    buffer_compile = ft_strdup("");
-     while ((bytes = read(fd, buffer, BUFFER_SIZE)) > 0)
+    buffer_compile = malloc(1);
+    while ((bytes = read(fd, buffer, BUFFER_SIZE)) > 0)
     {
-        buffer[bytes] = '\0';
+        buffer[bytes] = '\0'; // 
+        // printf("Buffer contains: [%s]\n", buffer);  // See what's actually in buffer
+        // printf("Buffer hex: ");
+        // for (int i = 0; i < bytes; i++)
+        //     printf("%02x ", (unsigned char)buffer[i]);
+        // printf("\n");BUFFER STRING CHECK ---- DEBUG
+        newline_status = check_for_newline(buffer);
+        if (newline_status >= 0)
+        { 
+            printf("newline_status: %d\n", newline_status);
+            break;
+        }
         temp = ft_strjoin(buffer_compile, buffer);
         free(buffer_compile);
         buffer_compile = temp;
-        if (check_for_newline(buffer) == 0)
-            break;
+        // ++newline_status;
+        // printf("%dChecking: %s\n", newline_status,buffer_compile);
+        
         //after read(), buffer string should be checked for \n with a helper function.  
         //bytes += read(fd, buffer, BUFFER_SIZE);
         //newline_status = check_for_newline(buffer);
         //newline is found, exit the loop
     }
+    free(buffer);
     ft_strcat(buffer_compile, leftover);
     return (buffer_compile);
     //buffer_compile = malloc(bytes + 1)

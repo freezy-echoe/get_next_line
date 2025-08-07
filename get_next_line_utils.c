@@ -7,13 +7,35 @@ int     check_for_newline(const char *buffer)
     i = 0;
     while(buffer[i])
     {
-        if (buffer[i] == 10)
+        if (buffer[i] == '\n')
         {
-            return (0);
+            return (i);
         }
         i++;
     }
-    return (1);
+    return (-1);
+}
+
+int pos_new_line(const char *buffer)
+{
+    int pos;
+    pos = 0;
+    while (buffer[pos])
+    {
+        
+        if (buffer[pos] != '\n')
+        {
+            continue ;
+        }
+        else
+        {
+            break ;
+        }
+        pos++;
+    }
+    
+
+    return pos;
 }
 
 int     ft_strlen(const char *str)
@@ -55,6 +77,13 @@ char    *ft_strcat(char *s1, const char *s2)
     }
     s1[i] = '\0';
     return (s1);
+}
+
+char    *ft_strlcat(char *s1, const char *s2, int l)
+{
+    int i;
+    int j;
+    implement strclat for split function
 }
 
 int     number_of_chars(int fd)
@@ -110,4 +139,19 @@ char    *ft_strjoin(const char *s1, const char *s2)
     ft_strcat(new_str, s1);
     ft_strcat(new_str, s2);
     return (new_str);
+}
+
+char    *split_newline(char *buffer, int size)
+{
+    int count;
+    char    *leftover;
+    char    *pre_newline;
+
+    pre_newline = malloc(size + 1);
+    leftover = malloc(ft_strlen(buffer - size) + 1);
+    count = 0;
+    while(buffer[count])
+    {
+        pre_newline[count] = buffer[count];//strlcat is a good option
+    }
 }
